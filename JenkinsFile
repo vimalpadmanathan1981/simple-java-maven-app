@@ -15,7 +15,27 @@ pipeline{
       steps{
         sh 'mvn test'
       }
-      
-  }
+      }
+      stage('collect artifact'){
+        steps{
+           archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+         }
+         }
+     stage('deploy to artifactory')
+     {
+     steps{
+      rtUpload (
+         serverId: 'ARTIFACTORY-SERVER',
+            spec: '''{
+                 "files": [
+            {
+              "pattern": "target/*.jar",
+              "target": "art-doc-dev-loc"
+            }
+         ]
+    }''',
+    buildName: 'holyFrog',
+    buildNumber: '42'
+)
   }
 }
