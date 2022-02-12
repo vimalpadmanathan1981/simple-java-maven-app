@@ -6,15 +6,16 @@ pipeline{
     }
   }
   stages {
-    stage('Build'){
+    stage('Build maven '){
       steps{
         sh 'mvn -B -DskipTests clean package'
       }
      }
     stage('Test'){
       steps{
-        sh 'mvn test'
+        sh 'mvn test' //testing the script 
       }
       }
+    
   }
 }
